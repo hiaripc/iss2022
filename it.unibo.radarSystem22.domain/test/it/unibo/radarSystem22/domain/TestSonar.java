@@ -30,16 +30,18 @@ public class TestSonar {
 		System.out.println("test Sonar Mock");
 		
 		//ILed led = DeviceFactory.createLed();
-		ISonar sonar = new SonarMock(90, 10, 250);
+		int init_distance = 90;
+		int tick_ms = 250; int tick_cm = 10;
+		ISonar sonar = new SonarMock(init_distance, tick_cm, tick_ms);
 		sonar.activate();
 		
 		assertTrue(sonar.isActive());
 		
-		Thread.sleep(250);
+		Thread.sleep(tick_ms);
 		
-		assertEquals(90-10,sonar.getDistance().getVal());
-		Thread.sleep(250);
-		assertEquals(90-10*2,sonar.getDistance().getVal());
+		assertEquals(init_distance- tick_cm,sonar.getDistance().getVal());
+		Thread.sleep(tick_ms*4);
+		assertEquals(init_distance- tick_cm*5,sonar.getDistance().getVal());
 		
 		sonar.deactivate();
 		assertTrue(!sonar.isActive());
