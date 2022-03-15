@@ -1,53 +1,60 @@
 package it.unibo.radarSystem22.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.Assert.assertTrue;
 import org.junit.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import it.unibo.radarSystem22.domain.interfaces.ILed;
-import it.unibo.radarSystem22.mock.LedMock;
-
+import it.unibo.radarSystem22.domain.mock.LedMock;
+import it.unibo.radarSystem22.domain.utils.BasicUtils;
+import it.unibo.radarSystem22.domain.utils.DomainSystemConfig;
+ 
 public class TestLed {
-
-	
-	@BeforeEach
+ 
+	@Before
 	public void up() {
 		System.out.println("up");
 	}
 	
-	@AfterEach
+	@After
 	public void down() {
-		System.out.println("down");
-	}
+		System.out.println("down");		
+	}	
 	
-	@Test
-	public void testLedMockOn() {
-		System.out.println("test LedMock");
+	@Test 
+	public void testLedMock() {
 		
-		//ILed led = DeviceFactory.createLed();
-		ILed led = new LedMock();
-		assertTrue(! led.getState());
+		System.out.println("testLedMock");
+		DomainSystemConfig.simulation = true; 
 		
-		led.turnOn();
-		assertTrue(led.getState());
+		ILed led = DeviceFactory.createLed();
+		assertTrue( ! led.getState() );
 		
-	}
+ 		led.turnOn();
+		assertTrue(  led.getState() );
+		
+		BasicUtils.delay(1000);		//to see the ledgui
+		
+ 		led.turnOff();
+		assertTrue(  ! led.getState() );	
+		
+		BasicUtils.delay(1000);		//to see the ledgui
+	}	
 	
-
-	@Test
-	public void testLedMockOff() {
-		System.out.println("test LedMock");
-		//DomainSystemConfig.simulation = true;
+	//@Test 
+	public void testLedConcrete() {
 		
-		//ILed led = DeviceFactory.createLed();
-		ILed led = new LedMock();
-		assertTrue(! led.getState());
+		System.out.println("testLedConcrete");
+		DomainSystemConfig.simulation = false; 
 		
-		led.turnOff();
-		assertTrue(!led.getState());
+		ILed led = DeviceFactory.createLed();
+		assertTrue( ! led.getState() );
 		
-	}
+ 		led.turnOn();
+		assertTrue(  led.getState() );
+		
+ 		led.turnOff();
+		assertTrue(  ! led.getState() );		
+	}		
+	
+ 
 }
