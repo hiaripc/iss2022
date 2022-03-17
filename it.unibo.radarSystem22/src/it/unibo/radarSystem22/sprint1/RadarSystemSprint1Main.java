@@ -19,10 +19,11 @@ private Controller controller;
 
 	@Override
 	public String getName() {	 
-		return "RadarSystemSprint1Main";
+		return this.getClass().getName();
 	}
 
 	public void setup( String domainConfig, String systemConfig  )  {
+	    BasicUtils.aboutThreads("Before setup ");
 		if( domainConfig != null ) {
 			DomainSystemConfig.setTheConfiguration(domainConfig);
 		}
@@ -34,13 +35,13 @@ private Controller controller;
 			DomainSystemConfig.sonarDelay       = 200;
 			//Su PC
 			DomainSystemConfig.simulation   	= true;
-			DomainSystemConfig.DLIMIT      		= 70;  
 			DomainSystemConfig.ledGui           = true;
-			RadarSystemConfig.RadarGuiRemote    = false;
-		//Su Raspberry (nel file di configurazione)
-//			DomainSystemConfig.simulation   		= false;
-//			DomainSystemConfig.DLIMIT      		= 12;  
-//			DomainSystemConfig.ledGui            = false;
+			RadarSystemConfig.DLIMIT      		= 70;  
+			RadarSystemConfig.RadarGuiRemote    = false; //se true non attiva radarGui 
+			//Su Raspberry (nei file di configurazione)
+//			DomainSystemConfig.simulation   	= false;
+//			DomainSystemConfig.ledGui           = false;
+//			RadarSystemConfig.DLIMIT      		= 12;  
 //			RadarSystemConfig.RadarGuiRemote    = true;
 		}
  	}
@@ -48,8 +49,10 @@ private Controller controller;
  	
 	@Override
 	public void doJob( String domainConfig, String systemConfig ) {
+	    BasicUtils.aboutThreads("Before doJob | ");
 		setup(domainConfig, systemConfig);
 		configure();
+		BasicUtils.waitTheUser();
 		//start
 	    ActionFunction endFun = (n) -> { 
 	    	System.out.println(n); 
@@ -59,13 +62,13 @@ private Controller controller;
 	}
 	
 	protected void configure() {
-		//Dispositivi di Input
-	    sonar      = DeviceFactory.createSonar();
 	    //Dispositivi di Output
 	    led        = DeviceFactory.createLed();
 	    radar      = RadarSystemConfig.RadarGuiRemote ? null : DeviceFactory.createRadarGui();
 		BasicUtils.aboutThreads("Before Controller creation | ");
-	    //Controller
+		//Dispositivi di Input
+	    sonar      = DeviceFactory.createSonar();
+//	    //Controller
 	    controller = Controller.create(led, sonar, radar);	 
 	}
   
@@ -83,10 +86,15 @@ private Controller controller;
  	public Controller getController() { return controller; }
 	
 	public static void main( String[] args) throws Exception {
-		BasicUtils.aboutThreads("At INIT with NO CONFIG files| ");
-		new RadarSystemSprint1Main().doJob(null,null);
-//		BasicUtils.aboutThreads("At INIT with  CONFIG files| ");
-//		new RadarSystemSprint1Main().doJob("DomainSystemConfig.json","RadarSystemConfig.json");
+//		BasicUtils.aboutThreads("At INIT with NO CONFIG files| ");
+//		new RadarSystemSprint1Main().doJob(null,null);
+		
+ 	     
+	    //Per Rasp:
+	    BasicUtils.aboutThreads("At INIT with CONFIG files| ");
+	    new RadarSystemSprint1Main().doJob(
+	           "DomainSystemConfig.json","RadarSystemConfig.json");
+ 	     		
 		
  	}
 

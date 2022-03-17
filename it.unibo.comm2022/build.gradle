@@ -7,18 +7,15 @@
 plugins {
     id 'java'
     id 'eclipse'
-    id 'application'
 	id 'jacoco'
 }
 
-version '0.2'
-
+version '1.0'
 sourceCompatibility = 1.8
 
 repositories {
     jcenter()
     flatDir { dirs '../unibolibs' }
-    //flatDir { dirs './libs' }
 }
 
 dependencies {
@@ -28,20 +25,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20160810'
 
-
-//CUSTOM RadarSystem
-	implementation name: 'it.unibo.radarSystem22.domain-1.0'
-	implementation name: 'it.unibo.comm2022-1.0'
-	
 //CUSTOM unibo
     implementation name: '2p301'
-    implementation name: 'uniboInterfaces'
-    implementation name: 'unibonoawtsupports'
+    //compile name: 'uniboInterfaces'
+    //compile name: 'unibonoawtsupports'
 	
-	//RADAR (support and GUI)
-	implementation name: 'radarPojo'
-	// https://mvnrepository.com/artifact/org.pushingpixels/trident
-	implementation group: 'org.pushingpixels', name: 'trident', version: '1.3'
 }
 
 sourceSets {
@@ -56,11 +44,8 @@ eclipse {
         sourceSets -= [sourceSets.main, sourceSets.test]
     }
 }
-
-//mainClassName = 'it.unibo.radarSystem22.sprint1.RadarSystemSprint1Main'  
-//mainClassName = 'it.unibo.radarSystem22.sprint2.main.sysOnRasp.RadarSysSprint2ControllerOnRaspMain'  
-mainClassName = 'it.unibo.radarSystem22.sprint2.MainSelectOnRasp'
-
+/*
+mainClassName = 'it.unibo.xxx' //TODO
 
 jar {
     from sourceSets.main.allSource
@@ -71,8 +56,8 @@ jar {
 distributions {
     main {
         contents {
-            from './Domain	SystemConfig.json'
             from './RadarSystemConfig.json'
         }
     }
 }
+*/
