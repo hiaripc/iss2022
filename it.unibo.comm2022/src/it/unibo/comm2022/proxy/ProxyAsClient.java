@@ -5,6 +5,7 @@ import it.unibo.comm2022.ProtocolType;
 import it.unibo.comm2022.interfaces.Interaction2021;
 import it.unibo.comm2022.utils.ColorsOut;
 import it.unibo.comm2022.tcp.TcpClientSupport;
+import it.unibo.comm2022.udp.giannatempo.UdpClientSupport;
  
 public class ProxyAsClient {
 private Interaction2021 conn; 
@@ -37,13 +38,18 @@ protected ProtocolType protocol ;
 				ColorsOut.out(name + " |  setConnection "  + conn, ColorsOut.BLUE );		
 				break;
 			}
+			case udp : {
+				int port = Integer.parseInt(entry);
+ 				conn = UdpClientSupport.connect(host,  port );  
+				break;
+			}
 			case coap : {
  				//conn = new CoapConnection( host,  entry );
 				break;
 			}
 			case mqtt : {
 				//La connessione col Broker viene stabilita in fase di configurazione
-				//La entry Ã¨ quella definita per ricevere risposte;
+				//La entry è quella definita per ricevere risposte;
 				//ColorsOut.out(name+"  | ProxyAsClient connect MQTT entry=" + entry );
 				//conn = MqttConnection.getSupport();					
  				break;
@@ -83,7 +89,7 @@ protected ProtocolType protocol ;
 	public void close() {
 		try {
 			conn.close();
-			ColorsOut.out(name + " |  CLOSED " + conn  );
+			ColorsOut.out(name + " |  CLOSED " + conn   );
 		} catch (Exception e) {
 			ColorsOut.outerr( name+"  | sendRequestOnConnection ERROR=" + e.getMessage()  );		}
 	}

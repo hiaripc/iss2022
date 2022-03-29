@@ -5,8 +5,9 @@ ciò garantisce una distribuzione clean.
 
 in .gitignore metto i file ignora i file nel push
 
+# Analisi del problema
 
-# 08/03
+**_ 08/03 _**
 la pipe non va bene perchè solo unix-like. Nelle specifiche viene invece detto che in un futuro potrebbe essere usato su sistemi diversi.
 
 "opinionated" ---> un software improntato in una certa logica di business e costruito attorno ad essa.
@@ -17,7 +18,7 @@ todo: creare nuovo progetto vuoto con gradle. it.unibo.radarSystem22.domain e co
 Un interfaccia è come un contratto, agli occhi della macchina un led è semplice oggetto che dovrà implementare. Con delle proprietà e metodi per accenderlo e spegnerlo e verificarne lo stato. Queste operazioni sono considerabili primitive.
 Il sonar sarà una qualsiasi entità che implementa ISonar, con relativi metodi accessori. Notare che getDistance non torna un valore, ma un'altra entità IDistance. 
 
-# 10/03
+**_ 0/03 _**
 
 il codice dominio, anche a livello di project, va ben separato dal software dell'applicazione. Questo perchè, a partire dallo stesso dominio si potrebbe sviluppare tutt'altra applicazione
 
@@ -39,7 +40,8 @@ Più il system designer è bravo meno l'application designer deve lavorare, colm
 
 aboutThreads() farà notare come in Kotlin si useranno meno processi e più leggeri rispetto a JAva
 
-# 15/03
+# Sprint 1
+**_ 15/03 _**
 Da recuperare il Sonar model e file configurazione domain.
 
 Poi Controller nel main project, direttamente come classe senza interfaccia perchè è strettamente collegato all'applicazione.
@@ -58,7 +60,8 @@ Il metodo terminate verrà eseguito dal chiamante della funzione (il controller 
 L'applicazione è un'implementazione di un interfaccia IApplication che definisce due semplici metodi doJob e getName, a scopo organizzativo. 
 
 
-# 17/03
+# Sprint 2 e 2a
+**_ 17/03 _**
 
 Occorre definire un "contratto" che leghi il server con il codice applicativo. Ciò nasce da un vincolo: il TCP Server non deve avere NIENTE legato alla logica applicativa. Non posso scrivere del codice legato alla business logic all'interno del server. Sempre per il principio della singola responsabilità. Il TCP Server fa il TCP Server, period. 
 
@@ -72,7 +75,7 @@ Per ora discrimina con due differenti metodi la richiesta dalla risposta. Succes
 
 La parte tratteggiata sarà un'infrastruttura che serve per dare il supporto al client nella comunicazione. 
 
-# todo: seguente
+**_ todo: seguente _**
 Il Rasp avrà una proxy di IRadarDisplay che attraverso la rete comunicherà con IRadarDisplay
 del PC.
 
@@ -89,7 +92,13 @@ Il TCP Server deve seguire le regole fissate dal livello applicativo. Fa parte d
 
 L'idea è che in cima alla piramide vi sono le Entities. Non hanno nessun tipo di dipendenza da nessuno. Le dipendenza vanno sempre dai livelli esteriori a quello più interiore (cima piramide, cono). Gli Use Cases  (Application business) dipendono solo dalle Entities. A seguire dipendono i Controllers e per ultimo, dipendende da questo le External Interface, layer successivi (web gui, etc.).
 
-# todo test proxy e deployment
+
+**_ todo test proxy e deployment _**
+
+    Procediamo con il deployment: nella dir del progetto effettuiamo uno zip grandle dopo aver assegnato alla variabile mainClassName l'entry point del plug in.
+        grandle distZip -x test
+    creando lo zip in ./build.
+    Successivamente procediamo con trasferimento.
 
 nel new RadarGuiProxyAsClient è possibile che connessione non vada con il Rasp per i proxy. Testare intanto con local host.
 
@@ -103,8 +112,33 @@ Sprint2 sysonRasp
 
 Distribuzione discorso main class nel build.gradle
 
+# Approfondimento analisi del problema
+**_ 24/03 _**
 
+Aggiungiamo alla libreria comm la soluzione con UDP, che riporta le stesse classi di TCP ma con UDP.
 
+**_ todo: collegare un led al rasp ed utilizzare UDP o TCP per spegnere/accendere il led utilizzando Python _**
 
+La differenza fra l'utilizzo dei protocolli non deve essere visibile a livello di entità. Sul Rasp occorre quindi instanziare un server UDP o TCP, in base alla configurazione data. 
 
+Un POJO EnablerAsServer NON è un server, controlla quale tipo di protocollo è richiesto ed attiva il rispettivo server.
+
+Non è quindi un server ma lo incapsula. **_ Opera in modo da fornire a un handler di tipo IApplMsgHandler la capacità di essere attivato da un messaggio e quindi di rispondere. _**
+
+Impostiamo una grammatica per il led.
+La grammatica vista è regolare poichè non self embedded (linguaggi).
+
+# Sprint 3
+
+**_ Implementare lo Sprint 3. _**
+
+Utilizzo di anaconda ed jupyter. 
+
+**_ Parlare con il led sul Rasp attraverso l'enabler, in python, con jupyter. Plus: Richieste multiple in parallelo. _**
+
+Problema: e se avessi n led? Dovrei attivare n server? Con questa strategia, sì. 
+
+Esempio con ContextMsgHandler in cui ho una sola porta, un solo server. Come fa a sapere a quale componente è destinato un messaggio? Il contenuto è definito a livello applicativo, quindi può sempre cambiare.
+Devo quindi incapsulare in una **_ sovrastruttura di messaggi_**, in modo che sappia sempre a chi è rivolto.
+Questo rappresenta uno standard-  
 
