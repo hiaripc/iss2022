@@ -40,7 +40,7 @@ public class ColorsOut {
 		System.out.println(  BACKGROUND + color + m + ANSI_RESET);
 	}
 	public static void out( String m  ) {	
-		System.out.println(  prefix + BACKGROUND + m + ANSI_RESET);
+		System.out.println(  prefix + BACKGROUND + BLUE + m + ANSI_RESET);
 	}
 	public static void outerr( String m  ) {		 
 		System.out.println(  prefix + BACKGROUND + RED + m + ANSI_RESET);

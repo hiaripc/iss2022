@@ -19,14 +19,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 
 //JSON
     // https://mvnrepository.com/artifact/org.json/json
-    implementation group: 'org.json', name: 'json', version: '20160810'
+    compile group: 'org.json', name: 'json', version: '20160810'
 
 //CUSTOM unibo
-    implementation name: '2p301'
+    compile name: '2p301'
     //compile name: 'uniboInterfaces'
     //compile name: 'unibonoawtsupports'
 	
@@ -44,15 +44,18 @@ eclipse {
         sourceSets -= [sourceSets.main, sourceSets.test]
     }
 }
-/*
-mainClassName = 'it.unibo.xxx' //TODO
+
+ 
+
+
+//mainClassName = 'it.unibo.xxx' //TODO
 
 jar {
     from sourceSets.main.allSource
-    manifest {
-        attributes 'Main-Class': "$mainClassName"
-	}
+    //manifest { attributes 'Main-Class': "$mainClassName" }
 }
+
+/*
 distributions {
     main {
         contents {

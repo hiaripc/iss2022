@@ -3,8 +3,10 @@ package it.unibo.radarSystem22.domain.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
 import org.json.JSONObject;
 import org.json.JSONTokener;
+ 
 
 
 public class DomainSystemConfig {
@@ -27,10 +29,10 @@ public class DomainSystemConfig {
 	}
 	
 	public static void setTheConfiguration( String resourceName ) {
-		//Nella distribuzione resourceName ï¿½ in una dir che include la bin  
+		//Nella distribuzione resourceName è in una dir che include la bin  
 		FileInputStream fis = null;
 		try {
-			System.out.println("%%% setTheConfiguration from file:" + resourceName);
+			ColorsOut.out("%%% setTheConfiguration from file:" + resourceName);
 			if(  fis == null ) {
  				 fis = new FileInputStream(new File(resourceName));
 			}
@@ -51,7 +53,7 @@ public class DomainSystemConfig {
 	        
  	        
 		} catch (FileNotFoundException e) {
-			System.out.println("setTheConfiguration ERROR " + e.getMessage() );
+ 			ColorsOut.outerr("setTheConfiguration ERROR " + e.getMessage() );
 		}
 
 	}	

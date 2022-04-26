@@ -9,12 +9,15 @@ import it.unibo.radarSystem22.domain.utils.ColorsOut;
 import it.unibo.radarSystem22.domain.utils.DomainSystemConfig;
 
 
+
+
+
 public class SonarConcrete extends SonarModel implements ISonar{
 	private  BufferedReader reader ;
 	private Process p ;
 	
 	/*
-	 * curVal Ã¨ usata come valore della distanza corrente misurata
+	 * curVal è usata come valore della distanza corrente misurata
 	 */
 	@Override
 	protected void sonarSetUp() {//called by SonarModel constructor

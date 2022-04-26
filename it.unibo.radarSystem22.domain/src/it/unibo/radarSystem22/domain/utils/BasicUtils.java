@@ -22,7 +22,7 @@ public class BasicUtils {
 	
 	public static void waitTheUser() {
 		try {
-			System.out.println("Please hit to restart ");
+			ColorsOut.outappl("Please hit to restart ", ColorsOut.ANSI_PURPLE);
 			System.in.read();
 		} catch (Exception e) {
 				e.printStackTrace();
@@ -32,7 +32,7 @@ public class BasicUtils {
 	public static void aboutThreads(String msg)   { 
 		String tname    = Thread.currentThread().getName();
 		String nThreads = ""+Thread.activeCount() ;
-		System.out.println( msg + " curthread=T n=N".replace("T", tname).replace("N", nThreads));
+		ColorsOut.outappl( msg + " curthread=T n=N".replace("T", tname).replace("N", nThreads), ColorsOut.YELLOW );
 	}
 
  
